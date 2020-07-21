@@ -90,19 +90,18 @@ class BicycleModelLinearized(AbstractDynamicModel):
             x_dot  # v * np.cos(beta) where beta is small
         )
         x_dot_rate = (
-            + (f_long_x_f + f_lat_x_f + f_long_x_r - f_lat_x_r) / self.m
+            + (f_long_x_f + f_lat_x_f + f_long_x_r + f_lat_x_r) / self.m
         )
 
         y_rate = (
-            0.0  # v * np.sin(beta) where beta is small
+            y_dot
         )
         y_dot_rate = (
-            # - psi_dot * x_dot
             + (f_long_y_f + f_lat_y_f + f_long_y_r + f_lat_y_r) / self.m
         )
 
         psi_rate = (
-            v * (beta_f - beta_r) / (self.l_f + self.l_r)
+            psi_dot
         )
         psi_dot_rate = ((
             (f_long_y_f + f_lat_y_f) * self.l_f

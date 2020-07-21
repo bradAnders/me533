@@ -5,11 +5,11 @@ from typing import Optional, List
 
 class AbstractDynamics:
 
-    def __init__(self, states: [str], time_variant=False):
+    def __init__(self, states=None, time_variant=False):
 
         self._logged_vars = []
-        self._state_str = states
-        self._state_sym = [sp.symbols(x) for x in states]
+        self._state_str = states if states is not None else []
+        self._state_sym = [sp.symbols(x) for x in self._state_str]
         self._num_states = len(self._state_sym)
         self._time_variant = time_variant
         self._t = sp.symbols('t') if time_variant else None

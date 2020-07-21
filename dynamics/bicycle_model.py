@@ -72,37 +72,33 @@ class BicycleModel(AbstractDynamicModel):
         f_lat_r = 2.0 * self.c_r * alpha_r
 
         f_long_x_f = f_long_f * sp.cos(delta_f)
-        f_long_y_f = f_long_f * sp.sin(delta_f)
-
         f_lat_x_f = - f_lat_f * sp.sin(delta_f)
+        f_long_y_f = - f_long_f * sp.sin(delta_f)
         f_lat_y_f = f_lat_f * sp.cos(delta_f)
 
         f_long_x_r = f_long_r * sp.cos(delta_r)
-        f_long_y_r = f_long_r * sp.sin(delta_r)
-
         f_lat_x_r = - f_lat_r * sp.sin(delta_r)
-        f_lat_y_r = + f_lat_r * sp.cos(delta_r)
+        f_long_y_r = - f_long_r * sp.sin(delta_r)
+        f_lat_y_r = f_lat_r * sp.cos(delta_r)
 
         # Equations of Motion
 
         x_rate = (
-            v * sp.cos(beta)
+            x_dot  # v * sp.cos(beta)
         )
         x_dot_rate = (
-            (f_long_x_f + f_lat_x_f + f_long_x_r - f_lat_x_r) / self.m
-            + psi_dot * y_dot
+            (f_long_x_f + f_lat_x_f + f_long_x_r + f_lat_x_r) / self.m
         )
 
         y_rate = (
-            v * sp.sin(beta)
+            y_dot  # v * sp.sin(beta)
         )
         y_dot_rate = (
             (f_long_y_f + f_lat_y_f + f_long_y_r + f_lat_y_r) / self.m
-            - psi_dot * x_dot
         )
 
         psi_rate = (
-            v * sp.cos(beta) * (sp.tan(beta_f) - sp.tan(beta_r)) / (self.l_f + self.l_r)
+             psi_dot
         )
         psi_dot_rate = ((
             (f_long_y_f + f_lat_y_f) * self.l_f
